@@ -5,7 +5,7 @@ rules:
     languages: [javascript] // what language this rule applies to (in this case, javascript)
 
     
-    pattern: eval($X) // # Matches any eval(...) call, # $X = whatever is inside the parentheses.
+    pattern: eval($X) // Matches any eval(...) call, $X = whatever is inside the parentheses.
 
     The pattern is the main thing that is being used to identify the vulnerabilities.
 
