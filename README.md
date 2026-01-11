@@ -14,7 +14,7 @@ Run all rules in this repository:
 
     semgrep --config ./semgrep-rules .
 
-    ## Example Vulnerable Code
+   
 
 ## Rules
 
