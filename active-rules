@@ -1,0 +1,24 @@
+## Rule Template
+
+rules:
+    id: 
+    message: 
+    severity:
+    languages: 
+    pattern:
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+   rule
+    id:  python-string-concatenation
+    message: "Avoid concatenating $X and $Y. For cleaner code, use f-strings.
+    severity: INFO
+    languages: [python]
+    pattern: $X + $Y
+
+
+
+
+
+
+
