@@ -14,21 +14,11 @@ Run all rules in this repository:
 
 ## Rules
 
-### 1. no-eval.yaml
-Detects any usage of `eval()` in JavaScript.  
-`eval()` executes arbitrary code and can lead to code injection vulnerabilities.
+### 1. python-string-concatenation
+Detects any usage of string concatenation in Python
+This is a simple rule suggesting there is a less messy way to create strings.
 
-### 2. no-child-exec.yaml
-Detects calls to `child_process.exec()` in Node.js.  
-This function executes shell commands and may allow command injection if untrusted input reaches it.
-
-## Example Vulnerable Code
-
-```js
-// Example flagged by no-eval.yaml
-const userInput = req.query.value;
-eval(userInput);
-
-// Example flagged by no-child-exec.yaml
-const cmd = req.body.command;
-child_process.exec(cmd);
+// Example flagged by python-string-concatenation
+print("Hello" + name)
+// Example not flagged
+print(f"Hello {name}")
