@@ -15,6 +15,24 @@ rules:
     severity: INFO
     languages: [python]
     pattern: $X + $Y
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rules:
+    id: no-eval # name of the rule being created
+    message: "Avoid using eval() — it can lead to code injection vulnerabilities." # what SAST will show when vulnerability is found
+    severity: WARNING  # the vulnerability severity
+    languages: [javascript] # what language this rule applies to (in this case, javascript)
+    pattern: eval($X) # Matches any eval(...) call, $X = whatever is inside the parentheses.
+
+    The pattern is the main thing that is being used to identify the vulnerabilities.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+   - id: no-child-exec
+  message: "child_process.exec() executes shell commands and may allow command injection. Avoid passing untrusted input."
+  severity: WARNING
+  languages: [javascript]
+  pattern: child_process.exec($CMD) # Matches any call to child_process.exec(...), $CMD = whatever is passed as the command argument
+
+# This means that if Semgrep sees a code called child_process.exec, it will flag the code and warn the developer.
+
 
 
 
