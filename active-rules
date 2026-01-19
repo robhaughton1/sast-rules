@@ -33,6 +33,18 @@ rules:
 
 # This means that if Semgrep sees a code called child_process.exec, it will flag the code and warn the developer.
 
+-id: no-xss
+message: "Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization."
+severity: HIGH
+languages: [javascript]
+pattern-either:
+- pattern: res.send($SRC)
+- pattern: res.write($SRC)
+- pattern: res.end($SRC)
+pattern-not: res.send(sanitize($SRC)
+pattern-not: res.write(sanitize($SRC)
+pattern-not: res.end(sanitize($SRC)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
 
