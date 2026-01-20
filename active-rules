@@ -43,7 +43,7 @@ pattern-either:
 - pattern: res.end($SRC)
 pattern-not: res.send(sanitize($SRC)
 pattern-not: res.write(sanitize($SRC)
-pattern-not: res.end(sanitize($SRC)
+pattern-not: res.end(sanitize($SRC) 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
