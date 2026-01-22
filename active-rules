@@ -31,7 +31,8 @@ rules:
       languages: [javascript]
       pattern: child_process.exec($CMD) # Matches any call to child_process.exec(...), $CMD = whatever is passed as the command argument
 
-# This means that if Semgrep sees a code called child_process.exec, it will flag the code and warn the developer.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 rules:
     -id: no-xss
     message: "Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization."
@@ -48,7 +49,7 @@ rules:
 
 rules:
     -id: no-innerhtml
-    message: Setting innerHTML can introduce XSS vulnerabilities 
+    message: Using innerHTML can introduce XSS vulnerabilities 
     severity: WARNING
     languages: [javascript]
     pattern: $EL.innerHTML = $X
