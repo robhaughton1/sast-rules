@@ -1,52 +1,57 @@
 ## Rule Template
-
 rules:
-    id: 
+   - id: 
     message: 
     severity:
     languages: 
     pattern:
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-   rule
-    id:  python-string-concatenation
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+   rules:
+    -id:  python-string-concatenation
     message: "Avoid concatenating $X and $Y. For cleaner code, use f-strings.
     severity: INFO
     languages: [python]
     pattern: $X + $Y
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rules:
-    id: no-eval # name of the rule being created
+    -id: no-eval # name of the rule being created
     message: "Avoid using eval() — it can lead to code injection vulnerabilities." # what SAST will show when vulnerability is found
     severity: WARNING  # the vulnerability severity
     languages: [javascript] # what language this rule applies to (in this case, javascript)
     pattern: eval($X) # Matches any eval(...) call, $X = whatever is inside the parentheses.
 
     The pattern is the main thing that is being used to identify the vulnerabilities.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-   - id: no-child-exec
-  message: "child_process.exec() executes shell commands and may allow command injection. Avoid passing untrusted input."
-  severity: WARNING
-  languages: [javascript]
-  pattern: child_process.exec($CMD) # Matches any call to child_process.exec(...), $CMD = whatever is passed as the command argument
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  rules:
+    -id: no-child-exec
+      message: "child_process.exec() executes shell commands and may allow command injection. Avoid passing untrusted input."
+      severity: WARNING
+      languages: [javascript]
+      pattern: child_process.exec($CMD) # Matches any call to child_process.exec(...), $CMD = whatever is passed as the command argument
 
 # This means that if Semgrep sees a code called child_process.exec, it will flag the code and warn the developer.
+rules:
+    -id: no-xss
+    message: "Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization."
+    severity: HIGH
+    languages: [javascript]
+    pattern-either:
+    - pattern: res.send($SRC)
+    - pattern: res.write($SRC)
+    - pattern: res.end($SRC)
+    pattern-not: res.send(sanitize($SRC)
+    pattern-not: res.write(sanitize($SRC)
+    pattern-not: res.end(sanitize($SRC) 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
--id: no-xss
-message: "Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization."
-severity: HIGH
-languages: [javascript]
-pattern-either:
-- pattern: res.send($SRC)
-- pattern: res.write($SRC)
-- pattern: res.end($SRC)
-pattern-not: res.send(sanitize($SRC)
-pattern-not: res.write(sanitize($SRC)
-pattern-not: res.end(sanitize($SRC) 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-
+rules:
+    -id: no-innerhtml
+    message: Setting innerHTML can introduce XSS vulnerabilities 
+    severity: WARNING
+    languages: [javascript]
+    pattern: $EL.innerHTML = $X
 
 
 
