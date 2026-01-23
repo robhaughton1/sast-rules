@@ -53,8 +53,14 @@ rules:
     severity: WARNING
     languages: [javascript]
     pattern: $EL.innerHTML = $X
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-
+rules: 
+   - id: no-document-write
+    message: Avoid using document.write(), it can lead to DOM XSS
+    severity: WARNING
+    languages: [javascript]
+   pattern: document.write($SRC)
 
 
 
