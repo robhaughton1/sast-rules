@@ -50,5 +50,14 @@
     languages: [javascript]
     pattern: document.write($SRC)
 
+   - id: no-string-timers
+    message: Avoid passing strings to timers, can lead to arbitrary code injection
+    severity: WARNING
+    languages: [javascript]
+    pattern: setTimeout($SRC, $T)
+
+ 
+   
+
 
 
