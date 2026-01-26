@@ -56,6 +56,14 @@
     languages: [javascript]
     pattern: setTimeout($SRC, $T)
 
+  - id: no-hardcoded-password
+    message: Hardcoded password detected — use environment variables or a secrets manager
+    severity: ERROR
+    languages: [javascript, python]
+    patterns:
+      - pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
+
+
  
    
 
