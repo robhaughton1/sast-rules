@@ -63,6 +63,18 @@
     patterns:
       - pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
 
+  - id: no-open-redirect
+    message: User-controlled navigation detected - validate or allowlist correct redirect targets
+    severity: WARNING
+    languages: [javascript]
+    patterns:
+      - pattern-either
+         - pattern:
+            window.location = $SRC
+         - pattern: 
+            location.href = $SRC  
+         - pattern: 
+            document.location = $SRC
 
  
    
