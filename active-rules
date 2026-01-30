@@ -76,7 +76,14 @@
          - pattern: 
             document.location = $SRC
 
- 
+  - id: no-command-injection
+    message: Use of child_process.exec spawns a shell, which could lead to Command Injection. Use execFIle or strict allowlisting
+    severity: WARNING
+    languages: [javascript]
+    patterns:
+       - pattern-either:
+          - pattern: exec($X)
+          - pattern: execSync($X)
    
 
 
