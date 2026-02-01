@@ -7,26 +7,26 @@
 
    rules:
     -id:  python-string-concatenation
-    message: "Avoid concatenating $X and $Y. For cleaner code, use f-strings.
+    message: Avoid concatenating $X and $Y. For cleaner code, use f-strings.
     severity: INFO
     languages: [python]
     pattern: $X + $Y
 
     -id: no-eval # name of the rule being created
-    message: "Avoid using eval() — it can lead to code injection vulnerabilities." # what SAST will show when vulnerability is found
+    message: Avoid using eval() — it can lead to code injection vulnerabilities.
     severity: WARNING 
     languages: [javascript] 
     pattern: eval($X)
 
     
     -id: no-child-exec
-      message: "child_process.exec() executes shell commands and may allow command injection. Avoid passing untrusted input."
+      message: child_process.exec() executes shell commands and may allow command injection. Avoid passing untrusted input.
       severity: WARNING
       languages: [javascript]
       pattern: child_process.exec($CMD) 
 
     -id: no-xss
-    message: "Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization."
+    message: Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization.
     severity: HIGH
     languages: [javascript]
     pattern-either:
@@ -84,7 +84,14 @@
        - pattern-either:
           - pattern: exec($X)
           - pattern: execSync($X)
-   
+
+  - id: no-new-function
+    message: Avoid creating functions from new strings, this executes code dynamically and can lead to injection
+    severity: WARNING
+    languages: [javascript]
+    patterns: 
+      - pattern-either:
+         - pattern: newFunction($X)
 
 
 
