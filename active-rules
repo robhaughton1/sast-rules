@@ -60,15 +60,15 @@
     message: Hardcoded password detected — use environment variables or a secrets manager
     severity: ERROR
     languages: [javascript, python]
-    patterns:
+    pattern:
       - pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
 
   - id: no-open-redirect
     message: User-controlled navigation detected - validate or allowlist correct redirect targets
     severity: WARNING
     languages: [javascript]
-    patterns:
-      - pattern-either
+    pattern:
+      - pattern-either:
          - pattern:
             window.location = $SRC
          - pattern: 
@@ -77,10 +77,10 @@
             document.location = $SRC
 
   - id: no-command-injection
-    message: Use of child_process.exec spawns a shell, which could lead to Command Injection. Use execFIle or strict allowlisting
+    message: Use of child_process.exec spawns a shell, which could lead to Command Injection. Use execFile or strict allowlisting
     severity: WARNING
     languages: [javascript]
-    patterns:
+    pattern:
        - pattern-either:
           - pattern: exec($X)
           - pattern: execSync($X)
@@ -91,7 +91,7 @@
     languages: [javascript]
     patterns: 
       - pattern-either:
-         - pattern: newFunction($X)
+         - pattern: new Function($X)
 
   - id: no-hardcoded-redirect
     message: User-controlled navigation detected — use allowlist validation
@@ -102,6 +102,13 @@
           - pattern: window.location = $SRC
           - pattern: window.location.href = $SRC
           - pattern: window.location.assign($SRC) 
+  - id: 
+    message: 
+    severity:
+    languages: 
+    pattern:
+
+
 
 
 
