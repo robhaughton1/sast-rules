@@ -4,9 +4,8 @@
     severity:
     languages: 
     pattern:
-
-   rules:
-    -id:  python-string-concatenation
+rules:
+   - id:  python-string-concatenation
      message: Avoid concatenating $X and $Y. For cleaner code, use f-strings.
      severity: INFO
      languages: [python]
@@ -38,11 +37,11 @@
         - pattern: res.write(sanitize($SRC))
         - pattern: res.end(sanitize($SRC))
 
-    - id: no-innerhtml
-      message: Using innerHTML can introduce XSS vulnerabilities 
-      severity: WARNING
-      languages: [javascript]
-      pattern: $EL.innerHTML = $X
+   - id: no-innerhtml
+     message: Using innerHTML can introduce XSS vulnerabilities 
+     severity: WARNING
+     languages: [javascript]
+     pattern: $EL.innerHTML = $X
 
    - id: no-document-write
      message: Avoid using document.write(), it can lead to DOM XSS
@@ -56,52 +55,40 @@
      languages: [javascript]
      pattern: setTimeout($SRC, $T)
 
-  - id: no-hardcoded-password
-    message: Hardcoded password detected — use environment variables or a secrets manager
-    severity: ERROR
-    languages: [javascript, python]
-    pattern:
+   - id: no-hardcoded-password
+     message: Hardcoded password detected — use environment variables or a secrets manager
+     severity: ERROR
+     languages: [javascript, python]
+     pattern:
       - pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
 
-  - id: no-open-redirect
-    message: User-controlled navigation detected - validate or allowlist correct redirect targets
-    severity: WARNING
-    languages: [javascript]
-    pattern:
+   - id: no-open-redirect
+     message: User-controlled navigation detected - validate or allowlist correct redirect targets
+     severity: WARNING
+     languages: [javascript]
+     pattern:
       - pattern-either:
-         - pattern:
-            window.location = $SRC
-         - pattern: 
-            location.href = $SRC  
-         - pattern: 
-            document.location = $SRC
+         - pattern: window.location = $SRC
+         - pattern: location.href = $SRC  
+         - pattern: document.location = $SRC
+         - pattern: window.location.assign($SRC) 
 
-  - id: no-command-injection
-    message: Use of child_process.exec spawns a shell, which could lead to Command Injection. Use execFile or strict allowlisting
-    severity: WARNING
-    languages: [javascript]
-    pattern:
-       - pattern-either:
+   - id: no-command-injection
+     message: Use of child_process.exec spawns a shell, which could lead to Command Injection. Use execFile or strict allowlisting
+     severity: WARNING
+     languages: [javascript]
+     pattern-either:
           - pattern: exec($X)
           - pattern: execSync($X)
-
-  - id: no-new-function
-    message: Avoid creating functions from new strings, this executes code dynamically and can lead to injection
-    severity: WARNING
-    languages: [javascript]
-    patterns: 
-      - pattern-either:
+   - id: no-new-function
+     message: Avoid creating functions from new strings, this executes code dynamically and can lead to injection
+     severity: WARNING
+     languages: [javascript]
+     pattern
          - pattern: new Function($X)
 
-  - id: no-hardcoded-redirect
-    message: User-controlled navigation detected — use allowlist validation
-    severity: WARNING
-    languages: [javascript]
-    patterns:
-      - pattern-either:
-          - pattern: window.location = $SRC
-          - pattern: window.location.href = $SRC
-          - pattern: window.location.assign($SRC) 
+  -
+        
 
 
 
