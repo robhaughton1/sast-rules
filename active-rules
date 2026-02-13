@@ -102,11 +102,6 @@
           - pattern: window.location = $SRC
           - pattern: window.location.href = $SRC
           - pattern: window.location.assign($SRC) 
-  - id: 
-    message: 
-    severity:
-    languages: 
-    pattern:
 
 
 
