@@ -12,13 +12,3 @@ Run all rules in this repository:
 
     semgrep --config ./semgrep-rules .
 
-## Rules
-
-### 1. python-string-concatenation
-Detects any usage of string concatenation in Python
-This is a simple rule suggesting there is a less messy way to create strings.
-
-// Example flagged by python-string-concatenation
-print("Hello" + name)
-// Example not flagged
-print(f"Hello {name}")
