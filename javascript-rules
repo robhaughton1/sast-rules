@@ -5,12 +5,6 @@
     languages: 
     pattern:
 rules:
-   - id:  python-string-concatenation
-     message: Avoid concatenating $X and $Y. For cleaner code, use f-strings.
-     severity: INFO
-     languages: [python]
-     pattern: $X + $Y
-
     - id: no-eval # name of the rule being created
       message: Avoid using eval() — it can lead to code injection vulnerabilities.
       severity: WARNING 
