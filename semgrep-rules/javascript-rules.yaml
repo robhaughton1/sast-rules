@@ -60,7 +60,7 @@ rules:
          
    - id: no-new-function
      message: Avoid creating functions from new strings, this executes code dynamically and can lead to injection
-     severity: WARNING
+     severity: CRITICAL
      languages: [javascript]
      pattern: new Function($X)
 
