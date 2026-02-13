@@ -1,1 +1,73 @@
+ rules:
+  - id: no-eval
+    message: Avoid using eval(), it can lead to code injection.
+    severity: CRITICAL
+    languages: [python]
+    pattern-either:
+      - pattern: eval($X)
+      - pattern: exec($X)
 
+  - id: no-command-injection
+    message: Avoid using shell=True or os.system() with user-controlled input.
+    severity: CRITICAL
+    languages: [python]
+    pattern-either:
+      - pattern: os.system($CMD)
+      - pattern: subprocess.call($CMD, shell=True)
+      - pattern: subprocess.run($CMD, shell=True)
+
+  - id: py-no-unsafe-html
+    message: Avoid rendering user controlled fields into HTML responses. Use proper contextual encoding on output
+    severity: HIGH
+    languages: [python]
+    pattern-either:
+      - pattern: render_template_string($HTML)
+      - pattern: mark_safe($HTML)
+      - pattern: return "<html>" + $X
+
+  - id: py-no-unsafe-html-build
+    message: Avoid constructing HTML with untrusted input. Use template engines with autoescaping.
+    severity: HIGH
+    languages: [python]
+    pattern: f"<html>{$X}"
+
+
+  - id: no-direct-response-write
+    message: Avoid writing unescaped user input directly into HTTP responses.
+    severity: HIGH
+    languages: [python]
+    pattern-either:
+      - pattern: response.write($X)
+      - pattern: return $X
+      - pattern: start_response($STATUS, HEADERS); $WRITE($X)
+
+  - id: no-string-timers
+    message: Avoid passing strings to timers, can lead to arbitrary code injection.
+    severity: HIGH
+    languages: [python]
+    pattern-either:
+      - pattern: threading.Timer($T, $FUNC)
+      - pattern: $LOOP.call_later($T, $FUNC)
+      - pattern: $SCHED.enter($T, $P, $FUNC)
+
+  - id: no-hard-coded-password
+    message: Avoid hard coding secrets within code.
+    severity: CRITICAL
+    languages: [javascript, python]
+    pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
+
+  - id: no-open-redirect
+    message: Avoid redirectiom to user-controlled URLS, use strict allowlisting for appropriate redirect targets.
+    severity: MEDIUM
+    languages: [python]
+    pattern-either:
+      - pattern: redirect($SRC)
+      - pattern: HttpResponseRedirect($SRC)
+      - pattern: RedirectResponse($SRC)
+      - pattern: return redirect($SRC)
+
+  - id: no-dynamic-compile
+    message: Avoid using compile() with user-controlled strings, can lead to arbitrary code execution.
+    severity: CRITICAL
+    languages: [python]
+    pattern: compile($SRC, $FILENAME, $MODE)
