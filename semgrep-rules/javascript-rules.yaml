@@ -1,1 +1,66 @@
+rules:
+    - id: no-eval # name of the rule being created
+      message: Avoid using eval() — it can lead to code injection vulnerabilities.
+      severity: CRITICAL
+      languages: [javascript] 
+      pattern: eval($X)
+
+    
+    - id: no-command-injection
+      message: Use of child_process.exec spawns a shell, which could lead to Command Injection. Use execFile or strict allowlisting.
+      severity: CRITICAL
+      languages: [javascript] 
+      pattern-either:
+          - pattern: exec($X)
+          - pattern: execSync($X)
+          - pattern: child_process.exec($X) 
+
+    - id: no-xss
+      message: Avoid inputting user input inside res.send or XSS sinks, use context appropriate sanitization.
+      severity: HIGH
+      languages: [javascript]
+      pattern-either:
+         - pattern: res.send($SRC)
+         - pattern: res.write($SRC)
+         - pattern: res.end($SRC)
+      pattern-not:
+        - pattern: res.send(sanitize($SRC)) 
+        - pattern: res.write(sanitize($SRC))
+        - pattern: res.end(sanitize($SRC))
+
+   - id: no-DOM
+     message: Use of DOM sinks can leak to DOM-based XSS.
+     severity: HIGH
+     languages: [javascript]
+     pattern-either:
+      - pattern: $EL.innerHTML = $X
+      - pattern: document.write($SRC)
+
+   - id: no-string-timers
+     message: Avoid passing strings to timers, can lead to arbitrary code injection
+     severity: CRITICAL
+     languages: [javascript]
+     pattern: setTimeout($SRC, $T)
+
+   - id: no-hardcoded-password
+     message: Hardcoded password detected — use environment variables or a secrets manager
+     severity: CRITICAL
+     languages: [javascript, python]
+     pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
+
+   - id: no-open-redirect
+     message: User-controlled navigation detected - validate or allowlist correct redirect targets
+     severity: MEDIUM
+     languages: [javascript]
+     pattern-either:
+       - pattern: window.location = $SRC
+       - pattern: location.href = $SRC  
+       - pattern: document.location = $SRC
+       - pattern: window.location.assign($SRC) 
+         
+   - id: no-new-function
+     message: Avoid creating functions from new strings, this executes code dynamically and can lead to injection
+     severity: WARNING
+     languages: [javascript]
+     pattern: new Function($X)
 
