@@ -54,10 +54,10 @@
     message: Avoid hard coding secrets within code.
     severity: CRITICAL
     languages: [javascript, python]
-    pattern-regex: (?i)(password|passwd|pwd)\s*=\s*['"].+['"]
-
+    pattern-regex: (?i)(password|passwd|pwd|secret|token|key)\s*[:=]\s*['"][^'"]+['"]
+    
   - id: no-open-redirect
-    message: Avoid redirectiom to user-controlled URLS, use strict allowlisting for appropriate redirect targets.
+    message: Avoid redirection to user-controlled URLS, use strict allowlisting for appropriate redirect targets.
     severity: MEDIUM
     languages: [python]
     pattern-either:
